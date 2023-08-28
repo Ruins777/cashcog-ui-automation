@@ -1,1 +1,0 @@
-# cashcog-ui-automation
