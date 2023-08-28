@@ -4,5 +4,6 @@
 cashcog-ui-automation.iml
 misc.xml
 modules.xml
-.idea/
-reports/
+.idea
+.idea/inspectionProfiles
+reports
