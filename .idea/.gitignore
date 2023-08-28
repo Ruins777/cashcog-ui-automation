@@ -7,3 +7,5 @@ modules.xml
 .idea
 .idea/inspectionProfiles
 reports
+page_objects/__pycache__/
+tests/__pycache__/
