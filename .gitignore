@@ -1,0 +1,9 @@
+*.xml
+*.html
+*.css
+reports/**
+tests/reports/**
+*.iml
+.pytest_cache/**/**
+main.py
+.idea
