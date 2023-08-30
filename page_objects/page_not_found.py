@@ -4,6 +4,20 @@ from page_objects.base_page import BasePage
 
 
 class PageNotFound(BasePage):
+    """
+         Class representing 404 page
+         It hold locators to elements on page and methods to interact with components on page
+
+         Attributes
+         ----------
+
+
+         Methods
+         -------
+
+
+     """
+
     # locators
     __url = "http://localhost/404"
     __link_to_user_page_locator = "//a[@href='/user']"

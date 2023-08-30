@@ -4,6 +4,20 @@ from page_objects.base_page import BasePage
 
 
 class UserCreatePage(BasePage):
+    """
+         Class representing 'create user' page
+         It hold locators to elements on page and methods to interact with components on page
+
+         Attributes
+         ----------
+
+
+         Methods
+         -------
+
+
+     """
+
     # heading locators
     __heading_locator = (By.TAG_NAME, "h1")
 
@@ -21,7 +35,8 @@ class UserCreatePage(BasePage):
     __email_input_field_locator = (By.XPATH, "//input[@formcontrolname='email']")
     __email_input_field_label_locator = (By.XPATH, "(//label/mat-label)[3]")
     __email_blank_input_field_error_locator = (By.XPATH, "//mat-error[contains(text(),'Email is required')]")
-    __email_invalid_input_field_error_locator = (By.XPATH, "//mat-error[contains(text(),'Please enter a valid email.')]")
+    __email_invalid_input_field_error_locator = \
+        (By.XPATH, "//mat-error[contains(text(),'Please enter a valid email.')]")
     __email_duplicate_error_locator = (By.XPATH, "//simple-snack-bar")
 
     # submit button locator
@@ -94,5 +109,3 @@ class UserCreatePage(BasePage):
         self.enter_email(email)
         if signup_checkbox:
             self.click_on_checkbox()
-
-

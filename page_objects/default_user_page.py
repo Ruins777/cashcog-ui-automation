@@ -1,4 +1,3 @@
-from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -6,6 +5,20 @@ from page_objects.base_page import BasePage
 
 
 class DefaultUserPage(BasePage):
+    """
+         Class representing default user page
+         It hold locators to elements on page and methods to interact with components on page
+
+         Attributes
+         ----------
+
+
+         Methods
+         -------
+
+
+     """
+
     # locator
     __heading_locator = (By.XPATH, "//h1")
     __create_user_button_locator = (By.XPATH, "//button/span[contains(text(), 'Create User')]")
@@ -15,8 +28,10 @@ class DefaultUserPage(BasePage):
     __email_column_locator = (By.XPATH, "//td[3]")
     __newsletter_signup_status_locator = (By.XPATH, "//td[4]/mat-icon")
     __delete_user_row_locator = (By.XPATH, "//td/a/mat-icon[contains(text(), 'delete_outline')]")
-    __deselected_newsletter_locator_pattern = "//table/tbody/tr[{}]/td[contains(@class, 'mat-column-newsletter')]/mat-icon[contains(text(), 'clear')]"
-    __selected_newsletter_locator_pattern = "//table/tbody/tr[{}]/td[contains(@class, 'mat-column-newsletter')]/mat-icon[contains(text(), 'done')]"
+    __deselected_newsletter_locator_pattern = \
+        "//table/tbody/tr[{}]/td[contains(@class, 'mat-column-newsletter')]/mat-icon[contains(text(), 'clear')]"
+    __selected_newsletter_locator_pattern = \
+        "//table/tbody/tr[{}]/td[contains(@class, 'mat-column-newsletter')]/mat-icon[contains(text(), 'done')]"
     __delete_user_row_locator_pattern = "//tr[{}]/td/a/mat-icon[contains(text(), 'delete_outline')]"
     __all_first_name_columns_locator = (By.XPATH, "//td[contains(@class, 'mat-column-firstName')]")
     __no_records_locator = (By.XPATH, "//mat-card/p")
@@ -30,9 +45,6 @@ class DefaultUserPage(BasePage):
 
     def open(self):
         super()._open_url(self.__url)
-
-    def _add_row_no_to_locator(self, row_no: int, locator_type: By, locator: str) -> tuple:
-        return locator_type, locator.format(str(row_no))
 
     def get_first_name_from_column(self, row_element: WebElement) -> str:
         return row_element.find_element(*self.__first_name_column_locator).text
@@ -72,16 +84,15 @@ class DefaultUserPage(BasePage):
             return False
 
     def delete_all_user_records(self):
-        try:
-            super()._get_text(self.__no_records_locator)
-        except TimeoutException as n:
-            while len(super()._get_all_rows_in_table(self.__all_user_rows_locator)) > 1:
-                rows = super()._get_all_rows_in_table(self.__all_user_rows_locator)
-                row, *tail = rows
+        while super()._get_no_of_rows_in_table(self.__all_user_rows_locator, 5) > 1:
+            rows = super()._get_all_rows_in_table(self.__all_user_rows_locator, 5)
+            row, *tail = rows
+            delete_button = self.get_delete_button_from_column(row)
+            delete_button.click()
+        else:
+            if super()._is_displayed(self.__all_user_rows_locator):
+                row = super()._find(self.__all_user_rows_locator)
                 delete_button = self.get_delete_button_from_column(row)
-                delete_button.click()
-            else:
-                delete_button = super()._find(self.__all_user_rows_locator)
                 delete_button.click()
 
     @property
@@ -94,7 +105,3 @@ class DefaultUserPage(BasePage):
 
     def click_create_user_button(self):
         super()._click(self.__create_user_button_locator)
-
-
-
-
